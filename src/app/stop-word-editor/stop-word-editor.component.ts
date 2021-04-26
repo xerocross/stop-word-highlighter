@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Word } from "../class/word"
+
+
+
 
 @Component({
   selector: 'app-stop-word-editor',
@@ -10,12 +14,40 @@ export class StopWordEditorComponent implements OnInit {
   constructor() { }
 
   bufferText : string = "";
+  bufferTextWords : string[] = [];
+  bufferTextWords2 : Word[] = [];
   stopWordsText : string = "";
 
   initStopWords : string[] = ["he", "him", "his", 
   "she", "her", "hers","they","them", 
   "theirs"];
+
+  initCommonExtraSymbols : Set<string> = new Set([".", "?", "\"", "'", "!", ","])
+
   stopWordSet : Set<string> = new Set();
+
+  get previewTextWords () : string {
+    let previewString = "";
+    for (let word of this.bufferTextWords2) {
+      previewString += word.originalPresentation;
+      previewString += " ";
+    }
+    return previewString;
+  }
+
+  get previewHTML () : string {
+    let previewHTML = "";
+    for (let word of this.bufferTextWords2) {
+      if (this.stopWordSet.has(word.baseWord)) {
+        previewHTML += "<span class=\"stop-word\">&nbsp;" + word.originalPresentation +  "&nbsp;</span>";
+      } else {
+        previewHTML += word.originalPresentation;
+      }
+      
+      previewHTML += " ";
+    }
+    return previewHTML;
+  }
 
 
   ngOnInit(): void {
@@ -36,19 +68,52 @@ export class StopWordEditorComponent implements OnInit {
     return this.parseStopWords();
   }
 
-
-
-  handleTextChange(text: string){
-    
+  handleTextChange(newbufferText: string){
+    this.parseMainText(newbufferText);
   }
 
-  handleStopWordsChange(text: string) {
+
+
+  parseMainText(newbufferText : string) : void {
+    const re = /\s+/
+    let bufferWordList : string[] = newbufferText.split(re);
+
+    let bufferWordList2 : Word[] = [];
+    for (let i = 0; i < bufferWordList.length; i++) {
+        
+
+        let originalWord = bufferWordList[i];
+        let baseWord = originalWord;
+        while (this.initCommonExtraSymbols.has(baseWord.charAt(0))) {
+          baseWord = baseWord.substring(1);
+        }
+        while (this.initCommonExtraSymbols.has(baseWord.charAt(baseWord.length-1))) {
+          baseWord = baseWord.substring(0,baseWord.length-1)
+        }
+        let word = new Word(originalWord, baseWord);
+
+        bufferWordList[i] = originalWord;
+        bufferWordList2[i] = word;
+    }
+    this.bufferTextWords = bufferWordList;
+    this.bufferTextWords2 = bufferWordList2;
+    console.log("buffer words",this.bufferTextWords);
+  }
+
+  // const re = /\s*(?:,|$)\s*/
+  // this.stopWordSet = new Set();
+  // for (let word of initialWordList) {
+  //   this.stopWordSet.add(word);
+  // }
+
+  handleStopWordsChange(stopWordText: string) {
     const re = /\s*(?:,|$)\s*/
-    let array : string[] = this.stopWordsText.split(re);
+    let newList = stopWordText.split(re);
     this.stopWordSet = new Set();
-    for (let word of array) {
+    for (let word of newList) {
       this.stopWordSet.add(word);
     }
+    console.log("this.stopWordSet", this.stopWordSet)
   }
 
 }

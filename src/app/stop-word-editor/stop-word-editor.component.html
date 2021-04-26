@@ -6,8 +6,6 @@
     display: flex;
     align-items: center;
     flex-direction : column;
-    border-style:solid;
-    border-width:1px;
 }
 
 .text-box-container {
@@ -26,11 +24,6 @@
     min-height:12em;
 }
 
-.row{ 
-    border-style:solid;
-    border-width:1px;
-    border-color:red;
-}
 
 .instructions {
     text-align: center;
@@ -38,14 +31,31 @@
     font-size: 15pt;
 }
 
+::slotted(.stop-word) {
+    color: rgb(235, 233, 233);
+    background-color: red;
+    font-weight: bold;
+}
+
+:host ::ng-deep .stop-word { 
+    color: rgb(235, 233, 233);
+    background-color: red;
+    font-weight: bold;
+}
+
+.preview-container {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 </style>
 
-<p>stop-word-editor works!</p>
+<h1>Stop-Word Editor</h1>
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 text-box-container">
-            <p class="instructions">Stop Words Here</p>
+            <p class="instructions">Stop Words</p>
                 <textarea 
                     class="form-control stop-words-text-area"
                     [(ngModel)]="stopWordsText"
@@ -55,7 +65,7 @@
 
             </div>
             <div class="col-md-9 text-box-container">
-                <p class="instructions">Your Beautiful, Beautiful Words</p>
+                <p class="instructions">Your Beautiful Words</p>
                 <textarea 
                     class="form-control main-text-area"
                     [(ngModel)]="bufferText"
@@ -64,15 +74,16 @@
                 </textarea>
             </div>
             <div class="row">
-                <div class="col-md-2 text-box-container">
-                    <p>{{ stopWordsForPrint }}</p>
-                </div>
-                <div class="col-md-8">
-                    <p class="instructions ">Preview</p>
-                    <p class="previewText">{{ bufferText }} </p>
-                </div>
-                <div class="col-md-2 text-box-container">
-                    
+                <div class="preview-container">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-8">
+                        <p class="instructions ">Preview</p>
+                        <p class="previewText" ><slot name="person-age" [innerHTML]="previewHTML"></slot></p>
+                    </div>
+                    <div class="col-md-2">
+                        
+                    </div>
                 </div>
             </div>
         </div>
