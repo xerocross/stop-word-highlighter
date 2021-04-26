@@ -90,6 +90,7 @@ export class StopWordEditorComponent implements OnInit {
         while (this.initCommonExtraSymbols.has(baseWord.charAt(baseWord.length-1))) {
           baseWord = baseWord.substring(0,baseWord.length-1)
         }
+        baseWord = baseWord.toLowerCase();
         let word = new Word(originalWord, baseWord);
 
         bufferWordList[i] = originalWord;
@@ -111,7 +112,9 @@ export class StopWordEditorComponent implements OnInit {
     let newList = stopWordText.split(re);
     this.stopWordSet = new Set();
     for (let word of newList) {
-      this.stopWordSet.add(word);
+      let originalStopWord = word;
+      let baseWord = originalStopWord.toLowerCase();
+      this.stopWordSet.add(baseWord);
     }
     console.log("this.stopWordSet", this.stopWordSet)
   }
