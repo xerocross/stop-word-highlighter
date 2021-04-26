@@ -101,12 +101,6 @@ export class StopWordEditorComponent implements OnInit {
     console.log("buffer words",this.bufferTextWords);
   }
 
-  // const re = /\s*(?:,|$)\s*/
-  // this.stopWordSet = new Set();
-  // for (let word of initialWordList) {
-  //   this.stopWordSet.add(word);
-  // }
-
   handleStopWordsChange(stopWordText: string) {
     const re = /\s*(?:,|$)\s*/
     let newList = stopWordText.split(re);

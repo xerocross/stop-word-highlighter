@@ -43,9 +43,10 @@
     font-weight: bold;
 }
 
-.preview-container {
-    margin-left: 5px;
-    margin-right: 5px;
+.preview-pane {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 14pt;
 }
 
 </style>
@@ -74,17 +75,15 @@
                 </textarea>
             </div>
             <div class="row">
-                <div class="preview-container">
                     <div class="col-md-2">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 preview-pane">
                         <p class="instructions ">Preview</p>
                         <p class="previewText" ><slot name="person-age" [innerHTML]="previewHTML"></slot></p>
                     </div>
                     <div class="col-md-2">
                         
                     </div>
-                </div>
             </div>
         </div>
 
