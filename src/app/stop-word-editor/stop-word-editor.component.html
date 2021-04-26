@@ -1,0 +1,82 @@
+<style>
+
+
+.main-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction : column;
+    border-style:solid;
+    border-width:1px;
+}
+
+.text-box-container {
+    display: flex;
+    align-items: center;
+    flex-direction : column;
+}
+
+.main-text-area {
+    width:90%;
+    min-height: 12em;
+}
+
+.stop-words-text-area {
+    width:90%;
+    min-height:12em;
+}
+
+.row{ 
+    border-style:solid;
+    border-width:1px;
+    border-color:red;
+}
+
+.instructions {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+</style>
+
+<p>stop-word-editor works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 text-box-container">
+            <p class="instructions">Stop Words Here</p>
+                <textarea 
+                    class="form-control stop-words-text-area"
+                    [(ngModel)]="stopWordsText"
+                    (ngModelChange)="handleStopWordsChange($event)"
+                >
+                </textarea>
+
+            </div>
+            <div class="col-md-9 text-box-container">
+                <p class="instructions">Your Beautiful, Beautiful Words</p>
+                <textarea 
+                    class="form-control main-text-area"
+                    [(ngModel)]="bufferText"
+                    (ngModelChange)="handleTextChange($event)"
+                >
+                </textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-2 text-box-container">
+                    <p>{{ stopWordsForPrint }}</p>
+                </div>
+                <div class="col-md-8">
+                    <p class="instructions ">Preview</p>
+                    <p class="previewText">{{ bufferText }} </p>
+                </div>
+                <div class="col-md-2 text-box-container">
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
