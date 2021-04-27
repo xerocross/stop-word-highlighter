@@ -39,7 +39,7 @@ export class StopWordEditorComponent implements OnInit {
     let previewHTML = "";
     for (let word of this.bufferTextWords2) {
       if (this.stopWordSet.has(word.baseWord)) {
-        previewHTML += "<span class=\"stop-word\">&nbsp;" + word.originalPresentation +  "&nbsp;</span>";
+        previewHTML += "<span class=\"stop-word\">" + word.originalPresentation +  "</span>";
       } else {
         previewHTML += word.originalPresentation;
       }
